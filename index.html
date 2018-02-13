@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<Title>Main Page</Title>
+	<script
+	src="https://code.jquery.com/jquery-3.2.1.js"
+	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src = "js/bootstrap.js"></script>
+	<script src = "main.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"
+	></script>
+	<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
+	></script>
+
+	<script src="loader.js"></script>
+	<script src="stl.js"></script>
+
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="header clearfix">
+			<nav>
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class="active"><a href="index.html">Home</a></li>
+					<li role="presentation"><a href="prints.html">Print Information</a></li>
+				</ul>
+			</nav>
+			<h3 class="text-muted">3D Print Records</h3>
+		</div>
+		<form id="add_print", class="form-horizontal">
+			
+			<div class="jumbotron">
+				<h1>Patron Information</h1>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="p_fName">Patron First Name:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="p_fName" placeholder="Enter Patron First Name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="p_lName">Patron Last Name:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="p_lName" placeholder="Enter Patron Last Name">
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="p_ID">Patron ID:</label>
+					<div class="col-sm-10"> 
+						<input type="number" class="form-control" id="p_ID" placeholder="Enter Student ID">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="p_Email">Patron Email:</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="p_Email" placeholder="ex; john@unt.edu">
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="p_Phone">Patron Phone Number:</label>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" id="p_Phone" placeholder="ex; 8171231234">
+					</div>
+				</div>
+
+
+
+
+			</div>
+
+			<div class="jumbotron">
+				<h1>Print Information</h1>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="file">STL File:</label>
+					<div class="col-sm-10">
+						<input type="file" accept="file" class="form-control" id="file" placeholder="ex; Test.stl">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="button" class="btn btn-default btn_ViewFile" id="p_ViewFile"> View File
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<div id='view'></div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="p_Filament">Filament Type:</label>
+						<div class="col-sm-1">
+							<button type="button" class="btn dropdown-toggle btn-default" id="p_Filament" placeholder="ex; PLA" data-toggle="dropdown"> ex; PLA
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a href="javascript:void(0);">PLA</a></li>
+									<li><a href="javascript:void(0);">ABS</a></li>
+									<li><a href="javascript:void(0);">TPU</a></li>
+								</ul>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="p_Infill">Infill %:</label>
+							<div class="col-sm-10">
+								<input type="number" class="form-control" id="p_Infill" placeholder="ex; 12.5">
+							</div>
+						</div>
+
+
+						<div class="form-group"> 
+							<div class="col-sm-12">
+								<button type="button" class="btn btn-primary submitButton">Submit</button>
+							</div>
+						</div>
+
+
+					</form>
+
+
+					<div class="row marketing">
+
+
+
+						<footer class="footer">
+							<p>&copy; AD 2018 Strategic Gravy.</p>
+						</footer>
+					</div>
+
+				</div> <!-- /container -->
+
+			</body>
+
+			</html>
