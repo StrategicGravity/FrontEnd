@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <Title>All Prints</Title>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src = "js/bootstrap.js"></script>
+  <script src = "main.js"></script>
+  <script>
+    var id= sessionStorage.getItem('current_id');
+    getTask(id);
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation"><a href="index.html">Home</a></li>
+          <li role="presentation"><a href="prints.html">Print Information</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">3D Print Records</h3>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>View Print</h1>
+
+
+
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_fName">Patron Name:</label>
+          <div class="col-sm-4">
+            <input type="text" id="p_fName" class="form-control" disabled>
+          </div>
+          <div class="col-sm-4">
+            <input type="text" id="p_lName" class="form-control" disabled>
+          </div>
+        </div>
+
+
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_ID">Patron ID:</label>
+          <div class="col-sm-8">
+            <input type="text" id="p_ID" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Email">Patron Email:</label>
+          <div class="col-sm-8">
+            <input type="text" id="p_Email" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Phone">Patron Phone Number:</label>
+          <div class="col-sm-8">
+            <input type="text" id="p_Phone" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Filament">Print Filament Type:</label>
+          <div class="col-sm-8">
+            <input type="text" id="p_Filament" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Infill">Print Infill:</label>
+          <div class="col-sm-8">
+            <input type="text" id="p_Infill" class="form-control" disabled>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Infill">Print Additional Instructions:</label>
+          <div class="col-sm-8">
+            <textarea id="p_Instructions" class="col-sm-8" rows="5" disabled></textarea>
+          </div>
+        </div>
+
+        <!--if reviewed this is filled in-->
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Mass">Estimated Mass(G):</label>
+          <div class="col-sm-8">
+            <input type="number" id="p_Mass" class="form-control" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_Hours">Time Estimate:</label>
+          <div class="col-sm-4">
+            <input type="number" id="p_Hours" class="form-control" placeholder="Hours" disabled>
+          </div>
+          <div class="col-sm-4">
+            <input type="number" id="p_Minutes" class="form-control" placeholder="Minutes" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_ReviewNotes">Review Notes:</label>
+          <div class="col-sm-8">
+            <textarea id="p_ReviewNotes" rows="5" placeholder="Enter Review Here"  disabled></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_ReviewNotes">Approved:</label>
+          <div class="col-sm-8">
+            <input type="checkbox" class="form-check-input" id="p_Approved"  disabled>
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+
+
+
+    <footer class="footer">
+      <p>&copy; AD 2018 Strategic Gravity</p>
+    </footer>
+
+  </div> <!-- /container -->
+
+</body>
+</html>
