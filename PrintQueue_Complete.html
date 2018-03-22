@@ -13,7 +13,7 @@
   <script src = "js/bootstrap.js"></script>
   <script src = "main.js"></script>
   <script>
-    getPrints();
+  getCompletePrints();
   </script>
 </head>
 
@@ -24,52 +24,27 @@
       <nav>
         <ul class="nav nav-pills pull-right">
           <li role="presentation"><a href="index.html">Home</a></li>
-          <li role="presentation" class="active"><a href="prints.html">Print Information</a></li>
+          <li role="presentation"><a href="prints.html">Print Admin Panel</a></li>
+          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Prints</a></li>
+          <li role="presentation" ><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
+          <li role="presentation" class="active"><a href="PrintQueue_Complete.html">Printing waiting for pickup</a></li>
         </ul>
       </nav>
-      <h3 class="text-muted">3D Print Records</h3>
+      <h3 class="text-muted">Ready to Print</h3>
     </div>
 
     <div class="jumbotron">
-    <div class="container">
-    <h1>Search Prints</h1>
+      <div class="container">
 
-
-      <div class="col-sm-12">
-        <p><a class="btn btn-lg btn-success btn-show-all" href="javascript:void(0);" role="button">Display All</a></p>
-      </div>
-      
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="p_fName">Patron Name:</label>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" id="p_fName" placeholder="Enter Patron Name">
+        <div class="row marketing">
+          <div class="col-lg-12">
+            <h2 class="page-header">Completed Prints</h2>
+            <div id="prints"></div>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <p><a class="btn btn-xs btn-primary btn-search-by-name" href="javascript:void(0);" role="button">Search By Name</a></p>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label col-sm-2" for="p_ID">Patron ID:</label>
-        <div class="col-sm-6">
-          <input type="number" class="form-control" id="p_ID" placeholder="Enter Patron ID">
-        </div>
-        <div class="col-sm-4">
-          <p><a class="btn btn-xs btn-primary btn-search-by-ID" href="javascript:void(0);" role="button">Search By ID</a></p>
-        </div>
-      </div>
 
       </div>
     </div>
-
-    <div class="row marketing">
-      <div class="col-lg-12">
-        <h2 class="page-header">Prints </h2>
-        <div id="prints"></div>
-      </div>
-    </div>
-
-
     <footer class="footer">
       <p>&copy; AD 2018 Strategic Gravity</p>
     </footer>
