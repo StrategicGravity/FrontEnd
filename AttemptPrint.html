@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <Title>Log Job Attempts</Title>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src = "js/bootstrap.js"></script>
+  <script src = "main.js"></script>
+  <script>
+    //var id= sessionStorage.getItem('current_id');
+    //getTask(id);
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation"><a href="index.html">Home</a></li>
+          <li role="presentation"><a href="prints.html">Print Admin Panel</a></li>
+          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Prints</a></li>
+          <li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
+          <li role="presentation"><a href="PrintQueue_Complete.html">Printing waiting for pickup</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">3D Print Records</h3>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Log Print Attempts</h1>
+
+        <!-- Begin Form! -->
+        <div class="form-group row">
+          <label class="control-label col-sm-4" for="p_AttemptCount">Number Of Attempts:</label>
+          <div class="col-sm-8">
+            <input type="number" id="p_AttemptCount" class="form-control">
+          </div>
+        </div>
+
+
+
+        
+      </div>
+    </div>
+    <!--Form goes here -->
+    <div class="jumbotron" id='log_attempts'>
+      <form id="form_log_attempts", class="form-horizontal">
+      </form>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; AD 2018 Strategic Gravity</p>
+    </footer>
+
+  </div> <!-- /container -->
+
+</body>
+</html>

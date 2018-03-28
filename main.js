@@ -10,7 +10,99 @@ $(document).ready(function(){
 	$('#edit_print').on('click','.submitButton', editPrint);
 	$('#review_print').on('click','.submitButton', postReview);
 	$('#create_login').on('click','.submitButton', addLogin);
+	$('#form_log_attempts').on('click', '.submitButton', function(){
+		logAttempts();
+	});
+	
 
+	$('#btn_login').click( function(){
+		console.log('clicked');
+		testLogins();
+	});
+
+	function testLogins(e){
+		//Get login from server here
+		var data=[{
+			s_UserName: 'Bob',
+			s_Password: 'a',
+			s_ID:1
+		},
+		{
+			s_UserName: 'Jeff',
+			s_Password: 'b',
+			s_ID:2
+		}];
+
+		$.each(data,function(key, login){
+			console.log(data);
+						
+		});
+
+	}
+
+	//Create html elements based on changed value of attemptCount
+	$('#p_AttemptCount').on('change',function(){
+		console.log('count changed!');
+		var count=$('#p_AttemptCount').val();
+
+		//Inject html elements based on count
+		var output='';
+
+		for(var i=0; i<count; i++)
+		{
+
+			var id_start="p_startTime"+i;
+			var id_finish="p_endTime"+i;
+			var id_Mass="p_Mass"+i;
+			var id_success="p_PrintSucceeded"+i;
+			output +=`
+					<h4> Attempt `+i+` </h4>
+					<hr class="my-4">
+					<div class="form-group row">
+						<label class='control-label col-sm-4' for="`+id_start+`"">Start time:</label>
+          				<div class="col-sm-8">
+            			<input type="time" id="`+id_start+`"" class="form-control">
+          				</div>
+          			</div>`;
+          	output +=`<div class="form-group row">
+          				<label class='control-label col-sm-4' for="`+id_finish+`">End time:</label>
+          				<div class="col-sm-8">
+            			<input type="time" id="`+id_finish+`" class="form-control">
+          				</div>
+          				</div>`;
+          	output +=`<div class="form-group row">
+          				<label class='control-label col-sm-4' for="`+id_Mass+`">Mass:</label>
+          				<div class="col-sm-8">
+            			<input type="number" id="`+id_Mass+`" class="form-control">
+          				</div>
+          			</div>`
+
+
+          	output+=`<div class="form-group row">
+            		<label class="control-label col-sm-4" for="`+id_success+`">Print Success:</label>
+            		<div class="col-sm-8">
+            		<input type="checkbox" class="form-check-input" id="`+id_success+`">
+            		</div>
+          			</div>`;
+ 		}
+ 		output+=`<div class="form-group row"> 
+              <div class="col-sm-12">
+                <button type="button" class="btn btn-primary submitButton" id="btn_LogAttempts">Log</button>
+              </div>
+          	</div>`;
+          	console.log(output);
+		$('#form_log_attempts').html(output);
+
+	});
+
+	function logAttempts(e){
+		console.log('event fired');
+		var printCount=$('#p_AttemptCount').val();
+		for(var i=0; i<printCount; i++){
+			var mass=$('#p_Mass'+i).val();
+			console.log(mass);
+		}
+	}
 
 	//$('#add_print').submit(addPrint);
 	$('body').on('click','.btn-edit-task',setTask);
@@ -173,7 +265,7 @@ function getReadyPrints(){
 			{
 				output += '<li class="list-group-item">';
 				output += print.p_fName + '<span class = "patron_name"></span>';
-				output += '<div class="pull-right"> <a class="btn btn-success btn-complete-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Mark Print as Complete</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+				output += '<div class="pull-right"> <a class="btn btn-success btn-complete-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Log Print Attempts</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
 			}
 		});
 		output+='</ul>';
@@ -458,7 +550,7 @@ function postReview(e)
 		type:'PUT',
 		contentType:'application/json',
 		success: function(data){
-			//window.location.href='index.html';
+			window.location.href='PrintQueue_AwaitingReview.html';
 		},
 		error:function(xhr ,status, err){
 			console.log(err);
