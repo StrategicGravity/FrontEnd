@@ -13,11 +13,31 @@
   <script src = "js/bootstrap.js"></script>
   <script src = "main.js"></script>
   <script>
-  getReadyPrints();
+    getReadyPrints();
+  </script>
+  <script>
+    $(document).ready(function(){
+      displayLogin();
+    });
   </script>
 </head>
 
 <body>
+  <div class='row' id='login_display'>
+
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h1>Login to Your Account</h1><br>
+        <input type="text" id="l_User" placeholder="Username">
+        <input type="password" id="l_Password" placeholder="Password">
+        <input type="button" id="btn_login" class="login loginmodal-submit" value="Login">
+      </div>
+    </div>
+  </div>
+
 
   <div class="container">
     <div class="header clearfix">

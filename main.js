@@ -10,35 +10,16 @@ $(document).ready(function(){
 	$('#edit_print').on('click','.submitButton', editPrint);
 	$('#review_print').on('click','.submitButton', postReview);
 	$('#create_login').on('click','.submitButton', addLogin);
+	
+
 	$('#form_log_attempts').on('click', '.submitButton', function(){
 		logAttempts();
 	});
 	
 
-	$('#btn_login').click( function(){
-		console.log('clicked');
-		testLogins();
-	});
+	
 
-	function testLogins(e){
-		//Get login from server here
-		var data=[{
-			s_UserName: 'Bob',
-			s_Password: 'a',
-			s_ID:1
-		},
-		{
-			s_UserName: 'Jeff',
-			s_Password: 'b',
-			s_ID:2
-		}];
-
-		$.each(data,function(key, login){
-			console.log(data);
-						
-		});
-
-	}
+	
 
 	//Create html elements based on changed value of attemptCount
 	$('#p_AttemptCount').on('change',function(){
@@ -56,74 +37,84 @@ $(document).ready(function(){
 			var id_Mass="p_Mass"+i;
 			var id_success="p_PrintSucceeded"+i;
 			output +=`
-					<h4> Attempt `+i+` </h4>
-					<hr class="my-4">
-					<div class="form-group row">
-						<label class='control-label col-sm-4' for="`+id_start+`"">Start time:</label>
-          				<div class="col-sm-8">
-            			<input type="time" id="`+id_start+`"" class="form-control">
-          				</div>
-          			</div>`;
-          	output +=`<div class="form-group row">
-          				<label class='control-label col-sm-4' for="`+id_finish+`">End time:</label>
-          				<div class="col-sm-8">
-            			<input type="time" id="`+id_finish+`" class="form-control">
-          				</div>
-          				</div>`;
-          	output +=`<div class="form-group row">
-          				<label class='control-label col-sm-4' for="`+id_Mass+`">Mass:</label>
-          				<div class="col-sm-8">
-            			<input type="number" id="`+id_Mass+`" class="form-control">
-          				</div>
-          			</div>`
+			<h4> Attempt `+i+` </h4>
+			<hr class="my-4">
+			<div class="form-group row">
+			<label class='control-label col-sm-4' for="`+id_start+`"">Start time:</label>
+			<div class="col-sm-8">
+			<input type="time" id="`+id_start+`"" class="form-control">
+			</div>
+			</div>`;
+			output +=`<div class="form-group row">
+			<label class='control-label col-sm-4' for="`+id_finish+`">End time:</label>
+			<div class="col-sm-8">
+			<input type="time" id="`+id_finish+`" class="form-control">
+			</div>
+			</div>`;
+			output +=`<div class="form-group row">
+			<label class='control-label col-sm-4' for="`+id_Mass+`">Mass:</label>
+			<div class="col-sm-8">
+			<input type="number" id="`+id_Mass+`" class="form-control">
+			</div>
+			</div>`
 
 
-          	output+=`<div class="form-group row">
-            		<label class="control-label col-sm-4" for="`+id_success+`">Print Success:</label>
-            		<div class="col-sm-8">
-            		<input type="checkbox" class="form-check-input" id="`+id_success+`">
-            		</div>
-          			</div>`;
- 		}
- 		output+=`<div class="form-group row"> 
-              <div class="col-sm-12">
-                <button type="button" class="btn btn-primary submitButton" id="btn_LogAttempts">Log</button>
-              </div>
-          	</div>`;
-          	console.log(output);
+			output+=`<div class="form-group row">
+			<label class="control-label col-sm-4" for="`+id_success+`">Print Success:</label>
+			<div class="col-sm-8">
+			<input type="checkbox" class="form-check-input" id="`+id_success+`">
+			</div>
+			</div>`;
+		}
+		output+=`<div class="form-group row"> 
+		<div class="col-sm-12">
+		<button type="button" class="btn btn-primary submitButton" id="btn_LogAttempts">Log</button>
+		</div>
+		</div>`;
+		console.log(output);
 		$('#form_log_attempts').html(output);
 
 	});
 
-	function logAttempts(e){
-		console.log('event fired');
-		var printCount=$('#p_AttemptCount').val();
-		for(var i=0; i<printCount; i++){
-			var mass=$('#p_Mass'+i).val();
-			console.log(mass);
-		}
-	}
+
+
+
 
 	//$('#add_print').submit(addPrint);
 	$('body').on('click','.btn-edit-task',setTask);
 	$('body').on('click','.btn-view-task',setTask_view);
 	$('body').on('click','.btn-review-task',setTask_review);
+	$('body').on('click','.btn-complete-print',attempt_print);
 	$('body').on('click','.btn-complete-print',completePrint);
 	$('body').on('click','.btn-delete-task',deleteTask);
 	$('body').on('click','.btn-show-all',getPrints);
 	$('body').on('click','.btn-search-by-name',getPrintsByName);
 	$('body').on('click','.btn-search-by-ID',getPrintsByID);
 
+	$('#btn_login').click( function(){
+		console.log('clicked');
+		testLogins();
+	});
 
+	$('#login_display').on('click','.btn_logout', function(){
+		console.log('clicked');
+		sessionStorage.removeItem('current_login');
+		window.location.href='index.html';
+	});
 	
 	$(".dropdown-menu").on('click', 'li a', function(){
 		$(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
 		$(this).parent().parent().siblings(".btn:first-child").val($(this).text());
 	});
+
+
+
 });
 
+
+
 //This is a testing URL
-var url='http://www.johnknowlesportfolio.com:3000';
+var url='http://www.johnknowlesportfolio.com:443';
 //Display All Prints
 function getPrints(){
 	$.get(url+'/api/jobs',function(data){
@@ -139,6 +130,111 @@ function getPrints(){
 	});
 }
 
+	//Display actively logged in user
+	function displayLogin(e){
+		console.log('test');
+		var user=sessionStorage.getItem('current_login');
+		var output=`		
+		<div class="col-sm-6">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">
+		Staff Login System
+		</button>
+		</div>
+		`;
+		if(user != null)
+		{
+			output+=`
+			<label class="control-label col-sm-3">Logged in as: `+user+`</label>
+			<div class="col-sm-3">
+			<a class="btn btn-primary btn_logout" id="btn_logout"> Log Out </a>
+			</div>
+			`
+			//console.log(output);
+		}
+		//console.log($('#login_display').length);
+		$('#login_display').html(output);
+
+
+
+	}
+
+//Test login information against feilds
+function testLogins(e){
+		//Get login from server here
+		$.get(url+'/api/logins',function(data){
+			$.each(data,function(key, login){
+				console.log(login);
+				console.log($('#l_User').val());
+				console.log($('#l_Password').val());
+				if($('#l_User').val() == login.s_UserName && $('#l_Password').val() == login.s_Password)
+				{
+					console.log('login success');
+					sessionStorage.setItem('current_login',login.s_UserName);
+					window.location.href='index.html';
+					return;
+				}
+			});
+		});
+
+	}
+
+	function attempt_print(e){
+		console.log('test');
+		var job_id=$(this).data('task-id');
+		console.log(job_id);
+		sessionStorage.setItem('current_id',job_id);
+		window.location.href='AttemptPrint.html';
+		return false;
+	}
+
+	//log attempts here
+	function logAttempts(e){
+		console.log('event fired');
+		var printCount=$('#p_AttemptCount').val();
+		var attempts=[];
+		var task_id=sessionStorage.getItem('current_id');
+
+		for(var i=0; i<printCount; i++){
+			//var mass=$('#p_Mass'+i).val();
+			//console.log(mass);
+
+			var id_start="#p_startTime"+i;
+			var id_finish="#p_endTime"+i;
+			var id_Mass="#p_Mass"+i;
+			var id_success="#p_PrintSucceeded"+i;
+			var temp ={
+				p_AttemptNumber : i,
+				p_TimeS : $(id_start).val(),
+				p_TimeF : $(id_finish).val(),
+				p_Mass : $(id_Mass).val(),
+				p_Status : $(id_success).is(":checked")
+			};
+			attempts.push(temp);
+		}
+
+		console.log('putting');
+		$.ajax({
+			url: url+'/api/jobs/logAttempts/'+task_id,
+			data: JSON.stringify({
+				"p_Attempts":attempts
+			}),
+			type:'PUT',
+			contentType:'application/json',
+			success: function(data){
+				window.location.href='index.html';
+			},
+			error:function(xhr ,status, err){
+				console.log(err);
+			}
+		});
+		console.log(attempts);
+	}
+
+	//Display attempts on a web page.
+	function displayAttempts(e){
+		var task_id=sessionStorage.getItem('current_id');
+
+	}
 //Search prints by name
 function getPrintsByName(){
 	var p_fName=$('#p_fName').val();
@@ -286,6 +382,9 @@ function getLogins(){
 		$('#logins').html(output);
 	});
 }
+
+
+
 function addPrint()
 {
 	
@@ -306,8 +405,9 @@ function addPrint()
 	var p_Minutes=0;
 	var p_ReviewNotes='none';	
 	var p_Approved=false;
-
-
+	var p_File=$('#p_File:file').val();
+	var temp;
+	console.log(p_File);
 
 
 	
@@ -327,13 +427,16 @@ function addPrint()
 			"p_Hours":p_Hours,
 			"p_Minutes":p_Minutes,
 			"p_ReviewNotes":p_ReviewNotes,
+			"p_File":p_File,
 			"p_isReviewed":false,
 			'p_isComplete':false,
-			"p_Approved":p_Approved
+			"p_Approved":p_Approved,
+			"p_Attempts": 'none'
 		}),
 		type:'POST',
 		contentType:'application/json',
 		success: function(data){
+			console.log('it worked!');
 			window.location.href='index.html';
 		},
 		error:function(xhr ,status, err){
@@ -425,6 +528,7 @@ function getTask(id)
 	//alert("Getting Task");
 	console.log('Get Task Called '+id);
 	$.get(url+'/api/jobs/' + id,function(print){
+		console.log(print);
 		$('#p_fName').val(print.p_fName);
 		$('#p_lName').val(print.p_lName);
 		$('#p_ID').val(print.p_ID);
@@ -440,6 +544,47 @@ function getTask(id)
 		$('#p_Minutes').val(print.p_Minutes);
 		$('#p_ReviewNotes').val(print.p_ReviewNotes);
 		$('#p_Approved').val(print.p_Approved);
+
+		var i=0;
+		console.log(print.p_Attempts[0].p_TimeS);
+		var output='<hr>'
+		while(i<print.p_Attempts.length)
+		{
+			console.log('attempt '+i);
+			output +=`
+			<h4> Attempt `+i+` </h4>
+			<div class="form-group row">
+			<label class='control-label col-sm-4'>Start time:</label>
+			<div class="col-sm-8">
+			<input type="time"  class="form-control" value = `+print.p_Attempts[i].p_TimeS+` disabled>
+			</div>
+			</div>`;
+			output +=`<div class="form-group row">
+			<label class='control-label col-sm-4' >End time:</label>
+			<div class="col-sm-8">
+			<input type="time"  class="form-control" value = `+print.p_Attempts[i].p_TimeF+` disabled>
+			</div>
+			</div>`;
+			output +=`<div class="form-group row">
+			<label class='control-label col-sm-4'>Mass:</label>
+			<div class="col-sm-8">
+			<input type="number" class="form-control" value = `+print.p_Attempts[i].p_Mass+` disabled>
+			</div>
+			</div>`
+
+
+			output+=`<div class="form-group row">
+			<label class="control-label col-sm-4">Print Success:</label>
+			<div class="col-sm-8">
+			<input type="text" class="form-check-input" value = "`+print.p_Attempts[i].p_Status+`" disabled>
+			</div>
+			</div>`;
+			i++;
+
+		}
+		console.log(output);
+		$('#view_print').html(output);
+
 
 	});
 }
