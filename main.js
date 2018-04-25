@@ -114,8 +114,21 @@ $(document).ready(function(){
 
 
 //This is a testing URL
-var url='http://www.johnknowlesportfolio.com:443';
+var url='http://localhost:8000';
 //Display All Prints
+// function getPrints(){
+// 	$.get(url+'/api/jobs',function(data){
+// 		let output= '<ul class= "list-group">';
+// 		$.each(data, function(key,print){
+// 			console.log(data);
+// 			output += '<li class="list-group-item">';
+// 			output += print.p_fName + '<span class = "patron_name"></span>';
+// 			output += '<div class="pull-right"> <a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+// 		});
+// 		output+='</ul>';
+// 		$('#prints').html(output);
+// 	});
+// }
 function getPrints(){
 	$.get(url+'/api/jobs',function(data){
 		let output= '<ul class= "list-group">';
@@ -123,12 +136,16 @@ function getPrints(){
 			console.log(data);
 			output += '<li class="list-group-item">';
 			output += print.p_fName + '<span class = "patron_name"></span>';
-			output += '<div class="pull-right"> <a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+			output+= print.p_FileName;
+			output += `<h4>
+           			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+       		</h4>`;
 		});
 		output+='</ul>';
 		$('#prints').html(output);
 	});
 }
+
 
 	//Display actively logged in user
 	function displayLogin(e){
@@ -385,65 +402,67 @@ function getLogins(){
 
 
 
-function addPrint()
-{
+// function addPrint()
+// {
 	
-	var p_fName=$('#p_fName').val();
-	var p_lName=$('#p_lName').val();
-	var p_ID=$('#p_ID').val();
-	var p_Email=$('#p_Email').val();
-	var p_Phone=$('#p_Phone').val();
+// 	var p_fName=$('#p_fName').val();
+// 	var p_lName=$('#p_lName').val();
+// 	var p_ID=$('#p_ID').val();
+// 	var p_Email=$('#p_Email').val();
+// 	var p_Phone=$('#p_Phone').val();
 
 
 
-	var p_Filament = $('#p_Filament').val();
-	var p_Instructions=$('#p_Instructions').val();
-	var p_Infill =$('#p_Infill').val();
+// 	var p_Filament = $('#p_Filament').val();
+// 	var p_Instructions=$('#p_Instructions').val();
+// 	var p_Infill =$('#p_Infill').val();
 
-	var p_Mass=0;	
-	var p_Hours=0;
-	var p_Minutes=0;
-	var p_ReviewNotes='none';	
-	var p_Approved=false;
-	var p_File=$('#p_File:file').val();
-	var temp;
-	console.log(p_File);
+// 	var p_Mass=0;	
+// 	var p_Hours=0;
+// 	var p_Minutes=0;
+// 	var p_ReviewNotes='none';	
+// 	var p_Approved=false;
+// 	var p_File=$('#p_File').prop('files');
+// 	var p_FileName=p_File.fileName;
+// 	var temp;
+// 	console.log(p_File.fileName);
 
+// 	var data=JSON.stringify({
+			// "p_fName": p_fName,
+			// "p_lName": p_lName,
+			// "p_ID": p_ID,
+			// "p_Email": p_Email,
+			// "p_Phone": p_Phone,
+			// "p_Filament":p_Filament,
+			// "p_Infill":p_Infill,
+			// "p_Instructions":p_Instructions,
+			// "p_Mass":p_Mass,			
+			// "p_Hours":p_Hours,
+			// "p_Minutes":p_Minutes,
+			// "p_ReviewNotes":p_ReviewNotes,
+			// "p_File":p_FileName,
+			// "p_isReviewed":false,
+			// 'p_isComplete':false,
+			// "p_Approved":p_Approved,
+			// "p_Attempts": 'none'
+// 		});
 
-	
-	console.log('Posting');
-	$.ajax({
-		url: url+'/api/jobs',
-		data: JSON.stringify({
-			"p_fName": p_fName,
-			"p_lName": p_lName,
-			"p_ID": p_ID,
-			"p_Email": p_Email,
-			"p_Phone": p_Phone,
-			"p_Filament":p_Filament,
-			"p_Infill":p_Infill,
-			"p_Instructions":p_Instructions,
-			"p_Mass":p_Mass,			
-			"p_Hours":p_Hours,
-			"p_Minutes":p_Minutes,
-			"p_ReviewNotes":p_ReviewNotes,
-			"p_File":p_File,
-			"p_isReviewed":false,
-			'p_isComplete':false,
-			"p_Approved":p_Approved,
-			"p_Attempts": 'none'
-		}),
-		type:'POST',
-		contentType:'application/json',
-		success: function(data){
-			console.log('it worked!');
-			window.location.href='index.html';
-		},
-		error:function(xhr ,status, err){
-			console.log(err);
-		}
-	});
-}
+// 	data.append(p_File);
+// 	console.log('Posting');
+// 	$.ajax({
+// 		url: url+'/api/jobs',
+// 		data: data,
+// 		type:'POST',
+// 		contentType:'application/json',
+// 		success: function(data){
+// 			console.log('it worked!');
+// 			window.location.href='index.html';
+// 		},
+// 		error:function(xhr ,status, err){
+// 			console.log(err);
+// 		}
+// 	});
+// }
 
 
 function addLogin()

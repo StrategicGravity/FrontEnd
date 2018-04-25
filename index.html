@@ -22,9 +22,9 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/style.css">
 	<script>
-	$(document).ready(function(){
-		displayLogin();
-	});
+		$(document).ready(function(){
+			displayLogin();
+		});
 	</script>
 
 
@@ -33,7 +33,7 @@
 
 <body>
 
-	<div class='row' id='login_display'>
+	<div class='row' name='login_display'>
 		<div class="col-sm-6">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">
 				Staff Login System
@@ -45,13 +45,13 @@
 
 
 	<!-- Modal -->
-	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal fade" name="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hnameden="true" style="display: none;">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<h1>Login to Your Account</h1><br>
-				<input type="text" id="l_User" placeholder="Username">
-				<input type="password" id="l_Password" placeholder="Password">
-				<input type="button" id="btn_login" class="login loginmodal-submit" value="Login">
+				<input type="text" name="l_User" placeholder="Username">
+				<input type="password" name="l_Password" placeholder="Password">
+				<input type="button" name="btn_login" class="login loginmodal-submit" value="Login">
 			</div>
 		</div>
 	</div>
@@ -64,138 +64,78 @@
 					<li role="presentation" class="active"><a href="index.html">Home</a></li>
 					<li role="presentation" ><a href="prints.html">Print Admin Panel</a></li>
 					<li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Prints</a></li>
-					<li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
+					<li role="presentation"><a href="PrintQueue_Ready.html">Paname and Waiting to Print</a></li>
 					<li role="presentation"><a href="PrintQueue_Complete.html">Printing waiting for pickup</a></li>
 
 				</ul>
 			</nav>
 			<h3 class="text-muted">3D Print Records</h3>
 		</div>
-		<form id="add_print", class="form-horizontal">
+		<form class="form-horizontal" action="http://localhost:8000/api/jobs" enctype="multipart/form-data" method="POST">
 			
-			<div class="jumbotron">
-				<h1>Patron Information</h1>
+			<h1>Patron Information</h1>
 
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_fName">Patron First Name:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="p_fName" placeholder="Enter Patron First Name">
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_lName">Patron Last Name:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="p_lName" placeholder="Enter Patron Last Name">
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_ID">Patron ID:</label>
-					<div class="col-sm-10"> 
-						<input type="number" class="form-control" id="p_ID" placeholder="Enter Student ID">
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_Email">Patron Email:</label>
-					<div class="col-sm-10">
-						<input type="email" class="form-control" id="p_Email" placeholder="ex; john@unt.edu">
-					</div>
-				</div>
-
-
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_Phone">Patron Phone Number:</label>
-					<div class="col-sm-10">
-						<input type="number" class="form-control" id="p_Phone" placeholder="ex; 8171231234">
-					</div>
-				</div>
-
-
-
-
+			<div>
+				<label for="p_fName">Patron First Name:</label>
+				<input type="text" name="p_fName" placeholder="Enter Patron First Name">
+			</div>
+			<div>
+				<label for="p_lName">Patron Last Name:</label>
+				<input type="text"  name="p_lName" placeholder="Enter Patron Last Name">
 			</div>
 
-			<div class="jumbotron">
-				<h1>Print Information</h1>
-				<!--
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="file">STL File:</label>
-					<div class="col-sm-10">
-						<input type="file" accept="file" class="form-control" id="file" placeholder="ex; Test.stl">
-					</div>
-				</div>
-					<div class="form-group">
-					<div class="col-sm-12">
-						<button type="button" class="btn btn-default btn_ViewFile" id="p_ViewFile"> View File
-						</div>
-					</div>
-				-->
-
-
-
-				<div class="form-group">
-					<div class="col-sm-12">
-						<div id='view'></div>
-					</div>
-				</div>
-
-				<div class="form-group">
-						<label class="control-label col-sm-2" for="p_FIle">File:</label>
-						<div class="col-sm-10">
-							<input type="file" class="form-control" id="p_File" placeholder="ex; Benchy.stl">
-						</div>
-					</div>
-
-				<div class="form-group">
-					<label class="control-label col-sm-2" for="p_Filament">Filament Type:</label>
-					<div class="col-sm-1">
-						<button type="button" class="btn dropdown-toggle btn-default" id="p_Filament" placeholder="ex; PLA" data-toggle="dropdown"> ex; PLA
-							<span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="javascript:void(0);">PLA</a></li>
-								<li><a href="javascript:void(0);">ABS</a></li>
-								<li><a href="javascript:void(0);">TPU</a></li>
-							</ul>
-
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="p_Infill">Infill %:</label>
-						<div class="col-sm-10">
-							<input type="number" class="form-control" id="p_Infill" placeholder="ex; 12.5">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="control-label col-sm-2" for="p_Instructions">Additional Instructions:</label>
-						<div class="col-sm-10">
-							<textarea id="p_Instructions" class="span6" rows="3" placeholder="What's up?" required></textarea>
-						</div>
-					</div>
-
-
-					<div class="form-group"> 
-						<div class="col-sm-12">
-							<button type="button" class="btn btn-primary submitButton">Submit</button>
-						</div>
-					</div>
-
-
-				</form>
-
-
-
-			</div> <!-- /container -->
-
-			<div class="row marketing">
-
-
-
-				<footer class="footer">
-					<p>&copy; AD 2018 Strategic Gravy.</p>
-				</footer>
+			<div>
+				<label for="p_ID">Patron ID:</label>
+				<input type="number" name="p_ID" placeholder="Enter Student ID">
 			</div>
-		</body>
 
-		</html>
+			<div>
+				<label for="p_Email">Patron Email:</label>
+				<input type="email" name="p_Email" placeholder="ex; john@unt.edu">
+			</div>
+
+
+			<div>
+				<label for="p_Phone">Patron Phone Number:</label>
+				<input type="number" name="p_Phone" placeholder="ex; 8171231234">
+			</div>
+
+
+
+
+
+			<h1>Print Information</h1>
+
+			<div>
+				<input type="file" name="file">
+			</div>
+			<div>
+				<label for="p_Infill">Infill %:</label>
+				<input type="number" name="p_Infill" placeholder="ex; 12.5">
+			</div>
+
+			<div>
+				<label for="p_Instructions">Additional Instructions:</label><br>
+				<textarea name="p_Instructions" class="span6" rows="3" placeholder="What's up?" required></textarea>
+			</div>
+
+
+			<button name="submit-button">Submit</button>
+
+
+		</form>
+
+
+
+
+		<div class="row marketing">
+
+
+
+			<footer class="footer">
+				<p>&copy; AD 2018 Strategic Gravy.</p>
+			</footer>
+		</div>
+	</body>
+
+	</html>
