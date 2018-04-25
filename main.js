@@ -99,7 +99,7 @@ $(document).ready(function(){
 	$('#login_display').on('click','.btn_logout', function(){
 		console.log('clicked');
 		sessionStorage.removeItem('current_login');
-		window.location.href='index.html';
+		window.location.href='Factory_Login.html';
 	});
 	
 	$(".dropdown-menu").on('click', 'li a', function(){
@@ -138,33 +138,58 @@ function getPrints(){
 			output += print.p_fName + '<span class = "patron_name"></span>';
 			output+= print.p_FileName;
 			output += `<h4>
-           			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
-       		</h4>`;
+			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+			</h4>`;
+			output += '<a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a>';
 		});
 		output+='</ul>';
 		$('#prints').html(output);
 	});
 }
 
+function generatePrintStats(){
+	var newPrints=0;
+	var newCNC=0;
+	var newLaser=0;
+	var jobsAwaitingPrinting=0;
+	var jobsAwaitingPickup=0;
+	$.get(url+'/api/jobs',function(data){
+		console.log(data);
+		$.each(data, function(key,print){
+			if(print.p_Approved==false)
+			{
+				console.log('newPrints ++');
+				newPrints++;
+			}
+			else if(print.p_isComplete==false)
+			{
+				jobsAwaitingPrinting++;
+			}
+			else if(print.p_isPickedUp==false)
+			{
+				jobsAwaitingPickup++;
+			}
+
+		});
+		let output=`<p> New Prints: `+newPrints +`<br>
+		Waiting to Print: `+jobsAwaitingPrinting+`<br>
+		Waiting to be Picked Up: `+jobsAwaitingPickup+`</p>`;
+		console.log(output);
+
+		$('#PrintStats').html(output);
+	});
+
+}
 
 	//Display actively logged in user
 	function displayLogin(e){
-		console.log('test');
 		var user=sessionStorage.getItem('current_login');
-		var output=`		
-		<div class="col-sm-6">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login-modal">
-		Staff Login System
-		</button>
-		</div>
-		`;
+		var output=``;
 		if(user != null)
 		{
 			output+=`
-			<label class="control-label col-sm-3">Logged in as: `+user+`</label>
-			<div class="col-sm-3">
-			<a class="btn btn-primary btn_logout" id="btn_logout"> Log Out </a>
-			</div>
+			<label class="col-sm-3" align="left">Logged in as: `+user+`</label>
+			<a class="btn btn-primary" id="btn_logout" align="right"> Log Out </a>
 			`
 			//console.log(output);
 		}
@@ -187,12 +212,21 @@ function testLogins(e){
 				{
 					console.log('login success');
 					sessionStorage.setItem('current_login',login.s_UserName);
-					window.location.href='index.html';
+					window.location.href='StaffLandingPage.html';
 					return;
 				}
 			});
 		});
 
+	}
+
+	function testPermissions(e){
+		var loggedInUser=sessionStorage.getItem('current_login');
+		if(loggedInUser==undefined)
+		{
+			alert('You dont have permission to view this page');
+			window.location.href='index.html';
+		}
 	}
 
 	function attempt_print(e){
@@ -238,7 +272,7 @@ function testLogins(e){
 			type:'PUT',
 			contentType:'application/json',
 			success: function(data){
-				window.location.href='index.html';
+				window.location.href='StaffLandingPage.html';
 			},
 			error:function(xhr ,status, err){
 				console.log(err);

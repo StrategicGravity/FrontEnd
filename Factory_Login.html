@@ -64,7 +64,7 @@
 	crossorigin="anonymous"></script>
 	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 	<script src = "js/bootstrap.js"></script>
-	<script src = "main.js"></script>
+
 	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -72,7 +72,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
 	<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
 	></script>
-	
+	<script src = "main.js"></script>
 
 </head>
 <body class="html front not-logged-in no-sidebars page-node page-node- page-node-1 node-type-page showcasing-greatness" data-gr-c-s-loaded="true" style>
@@ -273,12 +273,12 @@
 									<li class="leaf">
 										<a href="https://identityguide.unt.edu/understand-our-brand">How it Works</a>
 									</li>
-									<li class="leaf">
+									<li class="last leaf">
 										<a href="https://guides.library.unt.edu/factory">Contact Us</a>
 									</li>
-									<li class="last leaf">
-										<a href="Factory_Login.html">Staff Login</a>
-									</li>
+									<!-- <li class="last leaf">
+										<a href="login_page.html">Staff Login</a>
+									</li> -->
 								</ul>
 							</div>
 						</div>
@@ -369,82 +369,24 @@
 						<a id="main-content"></a>
 						<!--TITLE NAME-->
 						<div class="row">
-							<h1 id="page-title" class="title adjust">The Factory Submission Portal</h1>
+							<h1 id="page-title" class="title adjust">Staff Login System</h1>
 							<br>
 						</div>
 						<!--BODY TEXT-->
 						<div class="form-horizontal">
-							<form action="http://localhost:8000/api/jobs" enctype="multipart/form-data" method="POST">
 
-								<h1>Patron Information</h1>
-
+								
 								<div>
-									<label for="p_fName">Patron First Name:</label>
-									<input type="text" name="p_fName" placeholder="Enter Patron First Name">
+									<label for="l_User">User Name:</label>
+									<input type="text" id="l_User">
 								</div>
 								<div>
-									<label for="p_lName">Patron Last Name:</label>
-									<input type="text"  name="p_lName" placeholder="Enter Patron Last Name">
+									<label for="l_Password">Patron Last Name:</label>
+									<input type="password"  id="l_Password">
 								</div>
-
-								<div>
-									<label for="p_ID">Patron ID:</label>
-									<input type="number" name="p_ID" placeholder="Enter Student ID">
-								</div>
-
-								<div>
-									<label for="p_Email">Patron Email:</label>
-									<input type="email" name="p_Email" placeholder="ex; john@unt.edu">
-								</div>
+								<button id="btn_login">Submit</button>
 
 
-								<div>
-									<label for="p_Phone">Patron Phone Number:</label>
-									<input type="number" name="p_Phone" placeholder="ex; 8171231234">
-								</div>
-
-
-
-
-
-								<h1>Work Request Information</h1>
-								<div>
-									<label for="p_JobType"> Job Type:</label>
-									<select name="p_JobType">
-										<option value="CNC">CNC Cut</option>
-										<option value="Laser">Laser Cut</option>
-										<option value="Print" selected>3D Print</option>
-									</select>
-								</div>
-								<div>
-									<input type="file" name="file">
-								</div>
-
-								<div>
-									<label for="p_Filament"> Print Material (Advanced Users):</label>
-									<select name="p_Filament">
-										<option value="ABS" selected>ABS</option>
-										<option value="PLA">PLA</option>
-										<option value="TPU">TPU</option>
-									</select>
-								</div>
-
-								<div>
-									<label for="p_Infill">Infill % (Advanced Users):</label>
-									<input type="number" name="p_Infill" value=12.5>
-								</div>
-
-
-								<div>
-									<label for="p_Instructions">Additional Instructions:</label><br>
-									<textarea name="p_Instructions" class="span6" rows="3" placeholder="What's up?" required></textarea>
-								</div>
-
-
-								<button name="submit-button">Submit</button>
-
-
-							</form>
 						</div>
 					</div> <!-- /container -->
 				</div>
