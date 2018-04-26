@@ -13,13 +13,14 @@
   <script src = "js/bootstrap.js"></script>
   <script src = "main.js"></script>
   <script>
-    testPermissions();
+    testPermissions('Admin');
   </script>
 
   <script>
     $(document).ready(function(){
       displayLogin();
       getLogins();
+      //testPermissions();
 
     });
   </script>
@@ -29,68 +30,78 @@
 
  <div id='login_display' align="right">
 
+ </div>
+
+ <div class="container">
+  <div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation"><a href="Admin_Panel.html">Admin Panel</a></li>
+        <li role="presentation"><a href="StaffLandingPage.html">Staff Panel</a></li>
+        <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Jobs</a></li>
+        <li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
+        <li role="presentation"><a href="PrintQueue_Complete.html">Finished and Waiting for Pickup</a></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted">3D Print Records</h3>
   </div>
 
-  <div class="container">
-    <div class="header clearfix">
-      <nav>
-        <ul class="nav nav-pills pull-right">
-          <li role="presentation" class="active"><a href="StaffLandingPage.html">Staff Panel</a></li>
-          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Jobs</a></li>
-          <li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
-          <li role="presentation"><a href="PrintQueue_Complete.html">Finished and Waiting for Pickup</a></li>
-        </ul>
-      </nav>
-      <h3 class="text-muted">3D Print Records</h3>
-    </div>
-
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Create Login</h1>
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Create Login</h1>
 
 
 
-        <!-- Begin Form! -->
-        <form id="create_login", class="form-horizontal">
+      <!-- Begin Form! -->
+      <form id="create_login", class="form-horizontal">
 
-          <div class="form-group row">
-            <label class="control-label col-sm-2">Login Info:</label>
-            <div class="col-sm-3">
-              <input type="text" id="s_UserName" class="form-control" placeholder="userName">
-            </div>
-            <div class="col-sm-3">
-              <input type="password" id="s_Password" class="form-control" placeholder="password">
-            </div>
-
-            <div class="col-sm-4">
-              <input type="number" id="s_ID" class="form-control" placeholder="Student ID">
-            </div>
+        <div>
+          <label>Login Info:</label>
+          <div>
+            <input type="text" id="s_UserName" placeholder="EUID; ex jgk0053" required>
+          </div>
+          <div>
+            <input type="password" id="s_Password"  placeholder="password" required>
+          </div>
+          <div>
+            <input type="password" id="s_Password_Retype"  placeholder="Retype Password" required>
           </div>
 
-          <div class="form-group row"> 
-            <div class="col-sm-12">
-              <button type="button" class="btn btn-primary submitButton" id="btn_createLogin">Submit</button>
-            </div>
+          <div >
+            <input type="text" id="s_Name"  placeholder="Employee Name" required>
           </div>
+          <div>
+          <label for="s_Permission"> Permission Level:</label>
+            <select id="s_Permission">
+              <option value="None">None</option>
+              <option value="Staff" selected>Staff</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+        </div>
 
-        </form>
-      </div>
+        <button type="button" class="btn btn-primary submitButton">Submit</button>
+
+
+
+      </form>
     </div>
+  </div>
 
-    <div class="row marketing">
-      <div class="col-lg-12">
-        <h2 class="page-header">Logins </h2>
-        <div id="logins"></div>
-      </div>
+  <div class="row marketing">
+    <div class="col-lg-12">
+      <h2 class="page-header">Logins </h2>
+      <div id="logins"></div>
     </div>
+  </div>
 
 
 
-    <footer class="footer">
-      <p>&copy; AD 2018 Strategic Gravity</p>
-    </footer>
+  <footer class="footer">
+    <p>&copy; AD 2018 Strategic Gravity</p>
+  </footer>
 
-  </div> <!-- /container -->
+</div> <!-- /container -->
 
 </body>
 </html>

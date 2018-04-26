@@ -1,8 +1,6 @@
 
 $(document).ready(function(){
 
-	//alert(1);
-	//getPrints();
 	$('#add_print').on('click','.submitButton',function()
 	{
 		addPrint();
@@ -85,6 +83,9 @@ $(document).ready(function(){
 	$('body').on('click','.btn-complete-print',attempt_print);
 	$('body').on('click','.btn-complete-print',completePrint);
 	$('body').on('click','.btn-delete-task',deleteTask);
+
+	$('body').on('click','.btn-delete-user',deleteUser);
+
 	$('body').on('click','.btn-show-all',getPrints);
 	$('body').on('click','.btn-search-by-name',getPrintsByName);
 	$('body').on('click','.btn-search-by-ID',getPrintsByID);
@@ -100,10 +101,7 @@ $(document).ready(function(){
 		window.location.href='Factory_Login.html';
 	});
 	
-	$(".dropdown-menu").on('click', 'li a', function(){
-		$(this).parent().parent().siblings(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
-		$(this).parent().parent().siblings(".btn:first-child").val($(this).text());
-	});
+
 
 
 
@@ -113,20 +111,7 @@ $(document).ready(function(){
 
 //This is a testing URL
 var url='http://localhost:8000';
-//Display All Prints
-// function getPrints(){
-// 	$.get(url+'/api/jobs',function(data){
-// 		let output= '<ul class= "list-group">';
-// 		$.each(data, function(key,print){
-// 			console.log(data);
-// 			output += '<li class="list-group-item">';
-// 			output += print.p_fName + '<span class = "patron_name"></span>';
-// 			output += '<div class="pull-right"> <a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
-// 		});
-// 		output+='</ul>';
-// 		$('#prints').html(output);
-// 	});
-// }
+
 function getPrints(){
 	$.get(url+'/api/jobs',function(data){
 		let output= '<ul class= "list-group">';
@@ -188,10 +173,8 @@ function generatePrintStats(){
 			output+=`
 			<label class="col-sm-3" align="left">Logged in as: `+user+`</label>
 			<a class="btn btn-primary" id="btn_logout" align="right"> Log Out </a>
-			`
-			//console.log(output);
+			`;
 		}
-		//console.log($('#login_display').length);
 		$('#login_display').html(output);
 
 
@@ -218,13 +201,27 @@ function testLogins(e){
 
 	}
 
-	function testPermissions(e){
-		var loggedInUser=sessionStorage.getItem('current_login');
-		if(loggedInUser==undefined)
-		{
-			alert('You dont have permission to view this page');
-			window.location.href='index.html';
-		}
+	function testPermissions(permission_Required){
+		var user_sess=sessionStorage.getItem('current_login');
+		var user;
+
+		$.get(url+'/api/login/findByName/'+user_sess,function(data){
+			console.log(data);
+			if(data==undefined)
+			{
+				alert('You dont have permission to view this page undefined');
+				window.location.href='index.html';
+			}
+			if(data.s_Permission=='Admin')
+			{
+				return;
+			}
+			if(data.s_Permission!=permission_Required){
+				alert('You dont have permission to view this page');
+				window.location.href='StaffLandingPage.html';
+			}
+		});
+
 	}
 
 	function attempt_print(e){
@@ -244,8 +241,6 @@ function testLogins(e){
 		var task_id=sessionStorage.getItem('current_id');
 
 		for(var i=0; i<printCount; i++){
-			//var mass=$('#p_Mass'+i).val();
-			//console.log(mass);
 
 			var id_start="#p_startTime"+i;
 			var id_finish="#p_endTime"+i;
@@ -444,8 +439,11 @@ function getLogins(){
 		$.each(data, function(key,login){
 			console.log(data);
 			output += '<li class="list-group-item">';
-			output += login.s_UserName + '<span class = "patron_name"></span>';
-			output += '<div class="pull-right"> <a class="btn btn-danger btn-delete-task" data-task-id="'+login._id+'">Delete</a></div>';
+			output += 'User Name: '+login.s_UserName + '<br>';
+			output += 'Permission Level: ' +login.s_Permission + '<br>';
+			output+='<a class="btn btn-primary btn-edit-user" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a>';
+			output += '<a class="btn btn-danger btn-delete-user" data-task-id="'+login._id+'">Delete</a>';
+			output+='</li>'
 		});
 		output+='</ul>';
 		$('#logins').html(output);
@@ -454,67 +452,6 @@ function getLogins(){
 
 
 
-// function addPrint()
-// {
-	
-// 	var p_fName=$('#p_fName').val();
-// 	var p_lName=$('#p_lName').val();
-// 	var p_ID=$('#p_ID').val();
-// 	var p_Email=$('#p_Email').val();
-// 	var p_Phone=$('#p_Phone').val();
-
-
-
-// 	var p_Filament = $('#p_Filament').val();
-// 	var p_Instructions=$('#p_Instructions').val();
-// 	var p_Infill =$('#p_Infill').val();
-
-// 	var p_Mass=0;	
-// 	var p_Hours=0;
-// 	var p_Minutes=0;
-// 	var p_ReviewNotes='none';	
-// 	var p_Approved=false;
-// 	var p_File=$('#p_File').prop('files');
-// 	var p_FileName=p_File.fileName;
-// 	var temp;
-// 	console.log(p_File.fileName);
-
-// 	var data=JSON.stringify({
-			// "p_fName": p_fName,
-			// "p_lName": p_lName,
-			// "p_ID": p_ID,
-			// "p_Email": p_Email,
-			// "p_Phone": p_Phone,
-			// "p_Filament":p_Filament,
-			// "p_Infill":p_Infill,
-			// "p_Instructions":p_Instructions,
-			// "p_Mass":p_Mass,			
-			// "p_Hours":p_Hours,
-			// "p_Minutes":p_Minutes,
-			// "p_ReviewNotes":p_ReviewNotes,
-			// "p_File":p_FileName,
-			// "p_isReviewed":false,
-			// 'p_isComplete':false,
-			// "p_Approved":p_Approved,
-			// "p_Attempts": 'none'
-// 		});
-
-// 	data.append(p_File);
-// 	console.log('Posting');
-// 	$.ajax({
-// 		url: url+'/api/jobs',
-// 		data: data,
-// 		type:'POST',
-// 		contentType:'application/json',
-// 		success: function(data){
-// 			console.log('it worked!');
-// 			window.location.href='index.html';
-// 		},
-// 		error:function(xhr ,status, err){
-// 			console.log(err);
-// 		}
-// 	});
-// }
 
 
 function addLogin()
@@ -524,19 +461,26 @@ function addLogin()
 
 	var s_UserName=$('#s_UserName').val();
 	var s_Password=$('#s_Password').val();
-	var s_ID=$('#s_ID').val();
+	var s_Password_Retype=$('#s_Password_Retype').val();
+	var s_Name=$('#s_Name').val();
+	var s_Permission=$('#s_Permission').val();
 
 	console.log('got jere');
+	console.log(s_Permission);
 
-
-	
+	if(s_Password != s_Password_Retype)
+	{
+		alert('Password Mismatch!')
+		return;
+	}
 	console.log('posting');
 	$.ajax({
 		url: url+'/api/logins',
 		data: JSON.stringify({
 			"s_UserName":s_UserName,
 			"s_Password": s_Password,
-			"s_ID":s_ID
+			"s_Name":s_Name,
+			"s_Permission" :s_Permission
 		}),
 		type:'POST',
 		contentType:'application/json',
@@ -550,8 +494,6 @@ function addLogin()
 }
 
 function setTask(){
-	//console.log('test');
-	//alert("Setting task");
 	var job_id=$(this).data('task-id');
 	console.log(job_id);
 	sessionStorage.setItem('current_id',job_id);
@@ -811,30 +753,26 @@ function completePrint(e)
 		});
 	});
 
-	/*
-	var p_fName=$('#p_fName').val();
-	var p_lName=$('#p_lName').val();
-	var p_ID=$('#p_ID').val();
-	var p_Email=$('#p_Email').val();
-	var p_Phone=$('#p_Phone').val();
 
-
-
-	var p_Filament = $('#p_Filament').val();
-	var p_Instructions=$('#p_Instructions').val();
-	var p_Infill =$('#p_Infill').val();
-
-	var p_Mass=$('#p_Mass').val();	
-	var p_Hours=$('#p_Hours').val();
-	var p_Minutes=$('#p_Minutes').val();
-	var p_ReviewNotes=$('#p_ReviewNotes').val();	
-	var p_Approved=$('#p_Approved').prop('checked');
-
-	*/	
 	
 }
 
+function deleteUser(){
+	var user_id=$(this).data('task-id');
+	$.ajax({
+		url: url+'/api/login/'+user_id,
+		type:'DELETE',
+		async: true,
+		contentType:'application/json',
+		success: function(data){
+			window.location.href='CreateViewLogins.html';
+		},
+		error:function(xhr ,status, err){
+			console.log(err);
+		}
+	});
 
+};
 function deleteTask(){
 	var print_id=$(this).data('task-id');
 	$.ajax({

@@ -14,6 +14,7 @@
   <script src = "main.js"></script>
   <script>
     getPrints();
+    testPermissions('Admin');
   </script>
 
   <script>
@@ -24,31 +25,21 @@
 </head>
 
 <body>
-  <div class='row' id='login_display'>
+  <div id='login_display' align="right">
 
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <h1>Login to Your Account</h1><br>
-        <input type="text" id="l_User" placeholder="Username">
-        <input type="password" id="l_Password" placeholder="Password">
-        <input type="button" id="btn_login" class="login loginmodal-submit" value="Login">
-      </div>
-    </div>
-  </div>
+
 
   <div class="container">
     <div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-          <li role="presentation"><a href="index.html">Home</a></li>
-          <li role="presentation" class="active"><a href="prints.html">Print Admin Panel</a></li>
-          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Prints</a></li>
+          <li role="presentation" class="active"><a href="Admin_Panel.html">Admin Panel</a></li>
+          <li role="presentation"><a href="StaffLandingPage.html">Staff Panel</a></li>
+          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Jobs</a></li>
           <li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
-          <li role="presentation"><a href="PrintQueue_Complete.html">Printing waiting for pickup</a></li>
+          <li role="presentation"><a href="PrintQueue_Complete.html">Finished and Waiting for Pickup</a></li>
         </ul>
       </nav>
       <h3 class="text-muted">3D Print Records</h3>
@@ -56,9 +47,12 @@
 
     <div class="jumbotron">
       <div class="container">
-        <h1>Search Prints</h1>
+        <h1>Admin Panel</h1>
 
 
+        <div class="col-sm-12">
+          <p><a href="CreateViewLogins.html"> Account Management</a></p>
+        </div>
         <div class="col-sm-12">
           <p><a class="btn btn-lg btn-success btn-show-all" href="javascript:void(0);" role="button">Display All</a></p>
         </div>
