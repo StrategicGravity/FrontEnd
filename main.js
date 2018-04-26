@@ -19,8 +19,6 @@ $(document).ready(function(){
 
 	
 
-	
-
 	//Create html elements based on changed value of attemptCount
 	$('#p_AttemptCount').on('change',function(){
 		console.log('count changed!');
@@ -332,13 +330,23 @@ function getPrintByID_Field(p_ID){
 
 function getPrintsByReviewStatus(){
 	var isReviewed=false;
+	var workRequest=$('#p_WorkRequestType').val();
+	console.log(workRequest);
 	$.get(url+'/api/jobs/findByReviewStatus/'+isReviewed,function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
-			console.log(data);
-			output += '<li class="list-group-item">';
-			output += print.p_fName + '<span class = "patron_name"></span>';
-			output += '<div class="pull-right"> <a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+			if(print.p_JobType==workRequest || workRequest=='All')
+			{
+				output += '<li class="list-group-item">';
+				output += 'Patron Name: '+print.p_fName + '<br>';
+				output+='Job Type: '+print.p_JobType +'<br>';
+				output+= print.p_FileName;
+				output += `<h4>
+				<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+				</h4>`;
+				output += '<a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> ';
+				output+= '</li>'
+			}
 		});
 		output+='</ul>';
 		$('#prints').html(output);
@@ -354,7 +362,6 @@ function getApprovedPrints(){
 			console.log(data);
 			output += '<li class="list-group-item">';
 			output += print.p_fName + '<span class = "patron_name"></span>';
-			output += '<div class="pull-right"> <a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
 		});
 		output+='</ul>';
 		$('#prints').html(output);
@@ -381,14 +388,23 @@ function getRejectedPrints(){
 //Get prints that have been completed
 function getCompletePrints(){
 	var isDone=true;
-	console.log('jkljkl');
+	var workRequest=$('#p_WorkRequestType').val();
+	console.log(workRequest);
 	$.get(url+'/api/jobs/findByPrintComplete/'+isDone,function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
-			console.log(data);
-			output += '<li class="list-group-item">';
-			output += print.p_fName + '<span class = "patron_name"></span>';
-			output += '<div class="pull-right"> <a class="btn btn-success btn-pickup-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Picking Up Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+			if(print.p_JobType==workRequest || workRequest=='All')
+			{
+				output += '<li class="list-group-item">';
+				output += 'Patron Name: '+print.p_fName + '<br>';
+				output+='Job Type: '+print.p_JobType +'<br>';
+				output+= print.p_FileName;
+				output += `<h4>
+				<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+				</h4>`;
+				output += '<a class="btn btn-success btn-pickup-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Mark Print as Picked Up</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> ';
+				output+= '</li>'
+			}
 		});
 		output+='</ul>';
 		$('#prints').html(output);
@@ -396,23 +412,25 @@ function getCompletePrints(){
 }
 
 
-//Get prints that have been reviewed and are waiting to be printed
+
 function getReadyPrints(){
 	var isDone=true;
-	console.log('executed');
-	$.get(url+'/api/jobs/findByApprovalStatus/'+isDone,function(data){
+	var workRequest=$('#p_WorkRequestType').val();
+	console.log(workRequest);
+	$.get(url+'/api/jobs/findByReviewStatus/'+isDone,function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
-			console.log(data);
-			if(print.p_isComplete)
-			{
-				//Do nothing
-			}
-			else
+			if(print.p_JobType==workRequest || workRequest=='All')
 			{
 				output += '<li class="list-group-item">';
-				output += print.p_fName + '<span class = "patron_name"></span>';
-				output += '<div class="pull-right"> <a class="btn btn-success btn-complete-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Log Print Attempts</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a></div>';
+				output += 'Patron Name: '+print.p_fName + '<br>';
+				output+='Job Type: '+print.p_JobType +'<br>';
+				output+= print.p_FileName;
+				output += `<h4>
+				<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+				</h4>`;
+				output += '<a class="btn btn-success btn-complete-print" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Log Print Attempts</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> ';
+				output+= '</li>'
 			}
 		});
 		output+='</ul>';
