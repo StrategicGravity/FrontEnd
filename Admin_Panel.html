@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <Title>All Prints</Title>
+  <Title>Admin Panel</Title>
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -50,33 +50,54 @@
         <h1>Admin Panel</h1>
 
 
-        <div class="col-sm-12">
+        <div>
           <p><a href="CreateViewLogins.html"> Account Management</a></p>
         </div>
         <div class="col-sm-12">
           <p><a class="btn btn-lg btn-success btn-show-all" href="javascript:void(0);" role="button">Display All</a></p>
         </div>
 
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="p_fName">Patron Name:</label>
-          <div class="col-sm-6">
+        <div>
+          <label class="control-label" for="p_fName">Patron Name:</label>
+          <div>
             <input type="text" class="form-control" id="p_fName" placeholder="Enter Patron Name">
           </div>
-          <div class="col-sm-4">
+          <div >
             <p><a class="btn btn-xs btn-primary btn-search-by-name" href="javascript:void(0);" role="button">Search By Name</a></p>
           </div>
         </div>
+        <hr>
 
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="p_ID">Patron ID:</label>
-          <div class="col-sm-6">
+        <div>
+          <label class="control-label" for="p_ID">Patron ID:</label>
+          <div>
             <input type="number" class="form-control" id="p_ID" placeholder="Enter Patron ID">
           </div>
-          <div class="col-sm-4">
+          <div>
             <p><a class="btn btn-xs btn-primary btn-search-by-ID" href="javascript:void(0);" role="button">Search By ID</a></p>
           </div>
         </div>
+        <hr>
 
+        <div>
+          <label for="p_WorkRequestType">Filter By Work Request Type:</label>
+          <select id="p_WorkRequestType">
+            <option value="All" selected>All</option>
+            <option value="CNC">CNC</option>
+            <option value="Laser">Laser</option>
+            <option value="Print">Print</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="p_ApprovalStatus">Filter By Approval Status:</label>
+          <select id="p_ApprovalStatus">
+            <option value=true>Approved Prints</option>
+            <option value=false>Rejected Prints</option>
+            <option value='all' selected>All Statuses</option>
+          </select>
+        </div>
+        <hr>
       </div>
     </div>
 

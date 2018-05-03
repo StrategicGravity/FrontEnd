@@ -8,14 +8,16 @@ $(document).ready(function(){
 	$('#edit_print').on('click','.submitButton', editPrint);
 	$('#review_print').on('click','.submitButton', postReview);
 	$('#create_login').on('click','.submitButton', addLogin);
-	
+	$('#edit_login').on('click','.submitButton', editLogin);
+
 
 	$('#form_log_attempts').on('click', '.submitButton', function(){
 		logAttempts();
 	});
 	
 
-	
+
+
 
 	//Create html elements based on changed value of attemptCount
 	$('#p_AttemptCount').on('change',function(){
@@ -78,6 +80,9 @@ $(document).ready(function(){
 
 	//$('#add_print').submit(addPrint);
 	$('body').on('click','.btn-edit-task',setTask);
+
+	$('body').on('click','.btn-edit-user',setLogin);
+
 	$('body').on('click','.btn-view-task',setTask_view);
 	$('body').on('click','.btn-review-task',setTask_review);
 	$('body').on('click','.btn-complete-print',attempt_print);
@@ -95,40 +100,60 @@ $(document).ready(function(){
 		testLogins();
 	});
 
+	/*
 	$('#login_display').on('click','.btn_logout', function(){
 		console.log('clicked');
 		sessionStorage.removeItem('current_login');
 		window.location.href='Factory_Login.html';
 	});
-	
+	*/
+	$('body').on('click','.btn_logout',abc);
+
 
 
 
 
 });
 
-
+function abc(){
+	console.log('clicked');
+	sessionStorage.removeItem('current_login');
+	window.location.href='Factory_Login.html';
+}
 
 //This is a testing URL
-var url='http://localhost:8000';
+var url='http://johnknowlesportfolio.com:443';
 
 function getPrints(){
+	//var workRequest=$('#p_WorkRequestType').val();
+	//console.log(workRequest);
 	$.get(url+'/api/jobs',function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
-			console.log(data);
 			output += '<li class="list-group-item">';
-			output += print.p_fName + '<span class = "patron_name"></span>';
-			output+= print.p_FileName;
+			output += 'Patron Name: '+print.p_fName + '<br>';
+			output+='Job Type: '+print.p_JobType +'<br>';
+			output+= 'File Name: '+print.p_FileName +'<br>';
+			output+='Date Submitted: ' +dateFromObjectId(print._id)+'<br>';
+			output+='Job Reviewed: ' + print.p_isReviewed+'      ';
+			output+='<a class="btn btn-danger btn_ClearReview" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Clear Print Review</a>' + '<br>'
+			output+='Job Approved: ' + print.p_Approved;
+			output+='<a class="btn btn-danger btn_ClearApproval" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Clear Print Approval</a>' + '<br>'
+			output+='Job Completed: ' + print.p_isComplete;
+			output+='<a class="btn btn-danger btn_ClearCompletion" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Clear Print Completetion</a>' + '<br>'
+
 			output += `<h4>
 			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
 			</h4>`;
-			output += '<a class="btn btn-success btn-review-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Review Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> <a class="btn btn-primary btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a> <a class="btn btn-danger btn-delete-task" data-task-id="'+print._id+'">Delete</a>';
+			output += '<a class="btn btn-success btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> ';
+			output+= '</li>'
+			
 		});
 		output+='</ul>';
 		$('#prints').html(output);
 	});
 }
+
 
 function generatePrintStats(){
 	var newPrints=0;
@@ -172,7 +197,7 @@ function generatePrintStats(){
 		{
 			output+=`
 			<label class="col-sm-3" align="left">Logged in as: `+user+`</label>
-			<a class="btn btn-primary" id="btn_logout" align="right"> Log Out </a>
+			<button class="btn_logout" align="right"> Log Out </button>
 			`;
 		}
 		$('#login_display').html(output);
@@ -206,7 +231,7 @@ function testLogins(e){
 		var user;
 
 		$.get(url+'/api/login/findByName/'+user_sess,function(data){
-			console.log(data);
+			//console.log(data);
 			if(data==undefined)
 			{
 				alert('You dont have permission to view this page undefined');
@@ -441,7 +466,7 @@ function getLogins(){
 			output += '<li class="list-group-item">';
 			output += 'User Name: '+login.s_UserName + '<br>';
 			output += 'Permission Level: ' +login.s_Permission + '<br>';
-			output+='<a class="btn btn-primary btn-edit-user" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit</a>';
+			output+='<a class="btn btn-primary btn-edit-user" data-task-name="'+login.s_UserName+'" data-task-id="'+login._id+'">Edit</a>';
 			output += '<a class="btn btn-danger btn-delete-user" data-task-id="'+login._id+'">Delete</a>';
 			output+='</li>'
 		});
@@ -495,12 +520,20 @@ function addLogin()
 
 function setTask(){
 	var job_id=$(this).data('task-id');
-	console.log(job_id);
+	alert(job_id);
 	sessionStorage.setItem('current_id',job_id);
+
 	window.location.href='EditPrint.html';
 	return false;
 }
 
+function setLogin(){
+	var job_id=$(this).data('task-id');
+	console.log(job_id);
+	sessionStorage.setItem('current_id',job_id);
+	window.location.href='EditLogin.html';
+	return false;
+}
 function setTask_view(){
 	//console.log('test');
 	//alert("Setting task");
@@ -599,6 +632,51 @@ function getTask(id)
 		$('#view_print').html(output);
 
 
+	});
+}
+function getLoginForEditing(id){
+	console.log(id);
+	$.get(url+'/api/login/' + id,function(login){
+		console.log(login);
+		$('#s_UserName').val(login.s_UserName);
+		$('#s_Password').val(login.s_Password);
+		$('#s_Password_Retype').val(login.s_Password);
+		$('#s_Name').val(login.s_Name);
+	});
+}
+//Edit Login
+function editLogin(e)
+{
+	var task_id=sessionStorage.getItem('current_id');
+	var s_UserName=$('#s_UserName').val();
+	var s_Password=$('#s_Password').val();
+	var s_Password_Retype=$('#s_Password_Retype').val();
+	var s_Name=$('#s_Name').val();
+	var s_Permission=$('#s_Permission').val();
+
+
+	if(s_Password != s_Password_Retype)
+	{
+		alert('Password Mismatch!')
+		return;
+	}
+	console.log('putting');
+	$.ajax({
+		url: url+'/api/logins/'+task_id,
+		data: JSON.stringify({
+			"s_UserName":s_UserName,
+			"s_Password": s_Password,
+			"s_Name":s_Name,
+			"s_Permission" :s_Permission
+		}),
+		type:'PUT',
+		contentType:'application/json',
+		success: function(data){
+			window.location.href='CreateViewLogins.html';
+		},
+		error:function(xhr ,status, err){
+			console.log(err);
+		}
 	});
 }
 
@@ -788,4 +866,13 @@ function deleteTask(){
 		}
 	});
 
+};
+
+//Utility Functions!
+var objectIdFromDate = function (date) {
+	return Math.floor(date.getTime() / 1000).toString(16) + "0000000000000000";
+};
+
+var dateFromObjectId = function (objectId) {
+	return new Date(parseInt(objectId.substring(0, 8), 16) * 1000);
 };

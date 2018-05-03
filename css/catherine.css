@@ -26,3 +26,11 @@ form .field-multiple-table td.field-multiple-drag a.tabledrag-handle {
 form .field-add-more-submit {
   margin: .5em 0 0;
 }
+
+.form-horizontal {
+    margin: auto;
+    width: 70%;
+    border: 3px solid green;
+    padding: 10px;
+    text-align: justify;
+}

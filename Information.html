@@ -33,62 +33,44 @@
 		@import url(profiles/themes/unt_foundation/css/unt_foundation.css);
 		@import url(css/unt_sub.css);
 		@import url(css/catherine.css);
-/*		@import url(css/style.css);
-*/
-</style>
+	</style>
 
-<!--Scripts-->
-<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
-<!--<script src="misc/jquery.once.js"></script> -->
-<!--<script src="misc/drupal.js"></script>-->
-<meta class="foundation-data-attribute-namespace">
-<meta class="foundation-mq-xxlarge">
-<meta class="foundation-mq-xlarge-only">
-<meta class="foundation-mq-xlarge">
-<meta class="foundation-mq-large-only">
-<meta class="foundation-mq-large">
-<meta class="foundation-mq-medium-only">
-<meta class="foundation-mq-medium">
-<meta class="foundation-mq-small-only">
-<meta class="foundation-mq-small">
-<!--More Scripts-->
-<script src="https://use.fontawesome.com/69a1bbba1e.js"></script>
-<link href="https://use.fontawesome.com/69a1bbba1e.css" media="all" rel="stylesheet">
-<meta class="foundation-mq-topbar">
-<script
-src="https://code.jquery.com/jquery-3.2.1.js"
-integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-crossorigin="anonymous"></script>
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-<script src = "js/bootstrap.js"></script>
-<script src = "main.js"></script>
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
-<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
-></script>
-<script>
-	$(document).ready(function(){
-		console.log('test' + $(".p_JobType").val());
-		
-		$(".p_JobType").on('change',function(){
-			console.log('changed');
-			var bool=false;
-			if($(".p_JobType").val()!='Print')
-			{
-				bool=true;
-			}
-			$( '.p_PrintColor' ).prop( "disabled", bool );
-			$( '.p_Filament' ).prop( "disabled", bool );
-			$( '.p_Infill' ).prop( "disabled", bool );
-		});
-	});
-</script>
+	<!--Scripts-->
+	<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+	</script>
+	<!--<script src="misc/jquery.once.js"></script> -->
+	<!--<script src="misc/drupal.js"></script>-->
+	<meta class="foundation-data-attribute-namespace">
+	<meta class="foundation-mq-xxlarge">
+	<meta class="foundation-mq-xlarge-only">
+	<meta class="foundation-mq-xlarge">
+	<meta class="foundation-mq-large-only">
+	<meta class="foundation-mq-large">
+	<meta class="foundation-mq-medium-only">
+	<meta class="foundation-mq-medium">
+	<meta class="foundation-mq-small-only">
+	<meta class="foundation-mq-small">
+	<!--More Scripts-->
+	<script src="https://use.fontawesome.com/69a1bbba1e.js"></script>
+	<link href="https://use.fontawesome.com/69a1bbba1e.css" media="all" rel="stylesheet">
+	<meta class="foundation-mq-topbar">
+	<script
+	src="https://code.jquery.com/jquery-3.2.1.js"
+	integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+	crossorigin="anonymous"></script>
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+	<script src = "js/bootstrap.js"></script>
 
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r68/three.min.js"></script>
+	<script src="https://rawgit.com/mrdoob/three.js/master/examples/js/controls/TrackballControls.js"
+	></script>
+	<script src = "main.js"></script>
 
 </head>
 <body class="html front not-logged-in no-sidebars page-node page-node- page-node-1 node-type-page showcasing-greatness" data-gr-c-s-loaded="true" style>
@@ -293,7 +275,7 @@ crossorigin="anonymous"></script>
 										<a href="https://guides.library.unt.edu/factory">Contact Us</a>
 									</li>
 									<li class="last leaf">
-										<a href="Factory_Login.html">Staff Login</a>
+										<a href="index.html">Print Submission</a>
 									</li>
 								</ul>
 							</div>
@@ -385,92 +367,43 @@ crossorigin="anonymous"></script>
 						<a id="main-content"></a>
 						<!--TITLE NAME-->
 						<div class="row">
-							<h1 id="page-title" class="title adjust">The Factory Submission Portal</h1>
+							<h1 id="page-title" class="title adjust">How Submitting Jobs to The Factory Works</h1>
 							<br>
 						</div>
 						<!--BODY TEXT-->
 						<div class="form-horizontal">
-							<form action="http://johnknowlesportfolio.com:443/api/jobs" enctype="multipart/form-data" method="POST">
+							<p style="text-align: left">
+								<h5>The process works like this:</h5> 
+								
+								Prepare your STL file <br>
+								STL is a common format for the exchange of 3d models. Most modeling software should support this export format.<br>
+								<hr>
+								Upload your file<br>
+								Fill out your contact information, select your STL files, supply any notes you'd like us to be aware of, and click submit!<br>
 
-								<h1>Patron Information</h1>
+								Note: Notes would be filament color preferences, special modifications, stands vs. no-stands, or if you'd like us to contact you before evaluating your model.<br>
+								<hr>
+								We evaluate your model<br>
+								We check your model for fitness to print.<br>
 
-								<div>
-									<label for="p_fName">Patron First Name:</label>
-									<input type="text" name="p_fName" placeholder="Enter Patron First Name" required>
-								</div>
-								<div>
-									<label for="p_lName">Patron Last Name:</label>
-									<input type="text"  name="p_lName" placeholder="Enter Patron Last Name" required>
-								</div>
+								Approved models will be accompanied by an estimate and payment URL.<br>
+								<hr>
+								Follow the link to pay<br>
+								Use the URL provided in the email to pay for your model to be printed.<br>
+								<hr>
+								We print your model<br>
+								Your model will be printed as soon as a printer is available. When it's complete, you will be notified by email.<br>
 
-								<div>
-									<label for="p_ID">Patron ID:</label>
-									<input type="number" name="p_ID" placeholder="Enter Student ID" required>
-								</div>
+								<hr>
+								You pick it up at The Factory<br>
+								Come to The Factory during normal working hours to pick up your print!<br>
+								<hr>
+							</p>
+							<div style="text-align:center">    
 
-								<div>
-									<label for="p_Email">Patron Email:</label>
-									<input type="email" name="p_Email" placeholder="ex; johndoe@unt.edu" required>
-								</div>
+							<a href="index.html"><h3>Click here to get started!</h3> </a>
+							</div>
 
-
-								<div>
-									<label for="p_Phone">Patron Phone Number:</label>
-									<input type="number" name="p_Phone" placeholder="ex; 8171231234" required>
-								</div>
-
-
-
-
-
-								<h1>Work Request Information</h1>
-								<div>
-									<label for="p_JobType"> Job Type:</label>
-									<select name="p_JobType" required>
-										<option value="CNC">CNC Cut</option>
-										<option value="Laser">Laser Cut</option>
-										<option value="Print" selected>3D Print</option>
-									</select>
-								</div>
-								<div>
-									<input type="file" name="file">
-								</div>
-								<div>
-									<label for="p_PrintColor"> Print Color:</label>
-									<select name="p_PrintColor">
-										<option value="Blue" selected>Blue</option>
-										<option value="Green">Green</option>
-										<option value="Red">Red</option>
-										<option value="White">White</option>
-										<option value="Black">Black</option>
-									</select>
-								</div>
-								<div>
-									<label for="p_Filament"> Print Material (Advanced Users):</label>
-									<select name="p_Filament">
-										<option value="ABS" selected>ABS</option>
-										<option value="PLA">PLA</option>
-										<option value="TPU">TPU</option>
-									</select>
-								</div>
-
-
-								<div>
-									<label for="p_Infill">Infill % (Advanced Users):</label>
-									<input type="number" name="p_Infill" value=12.5>
-								</div>
-
-
-								<div>
-									<label for="p_Instructions">Additional Instructions:</label><br>
-									<textarea name="p_Instructions" class="span6" rows="3" placeholder="What's up?" required></textarea>
-								</div>
-
-
-								<button name="submit-button">Submit</button>
-
-
-							</form>
 						</div>
 					</div> <!-- /container -->
 				</div>
