@@ -146,6 +146,7 @@ function getPrints(){
 			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
 			</h4>`;
 			output += '<a class="btn btn-success btn-edit-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Edit Print</a> <a class="btn btn-success btn-view-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">View</a> ';
+			output+='<a class="btn btn-danger btn-delete-task" data-task-name="'+print.p_fName+'" data-task-id="'+print._id+'">Delete Print</a>'
 			output+= '</li>'
 			
 		});
@@ -164,7 +165,7 @@ function generatePrintStats(){
 	$.get(url+'/api/jobs',function(data){
 		console.log(data);
 		$.each(data, function(key,print){
-			if(print.p_Approved==false)
+			if(print.p_isReviewed==false)
 			{
 				console.log('newPrints ++');
 				newPrints++;
@@ -264,7 +265,7 @@ function testLogins(e){
 		var printCount=$('#p_AttemptCount').val();
 		var attempts=[];
 		var task_id=sessionStorage.getItem('current_id');
-
+		var currentLogin=sessionStorage.getItem('current_login');
 		for(var i=0; i<printCount; i++){
 
 			var id_start="#p_startTime"+i;
@@ -285,7 +286,8 @@ function testLogins(e){
 		$.ajax({
 			url: url+'/api/jobs/logAttempts/'+task_id,
 			data: JSON.stringify({
-				"p_Attempts":attempts
+				"p_Attempts":attempts,
+				"p_CompleteLogin": currentLogin
 			}),
 			type:'PUT',
 			contentType:'application/json',
@@ -348,11 +350,11 @@ function getPrintByID_Field(p_ID){
 
 
 
-function getPrintsByReviewStatus(){
-	var isReviewed=false;
+function getNewPrints(){
+	//var isReviewed=false;
 	var workRequest=$('#p_WorkRequestType').val();
 	console.log(workRequest);
-	$.get(url+'/api/jobs/findByReviewStatus/'+isReviewed,function(data){
+	$.get(url+'/api/jobs/findByNew/newQueue',function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
 			if(print.p_JobType==workRequest || workRequest=='All')
@@ -434,10 +436,9 @@ function getCompletePrints(){
 
 
 function getReadyPrints(){
-	var isDone=true;
 	var workRequest=$('#p_WorkRequestType').val();
 	console.log(workRequest);
-	$.get(url+'/api/jobs/findByReviewStatus/'+isDone,function(data){
+	$.get(url+'/api/jobs/pendingQueue',function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
 			if(print.p_JobType==workRequest || workRequest=='All')
@@ -740,48 +741,25 @@ function editPrint(e)
 
 function postReview(e)
 {
-	var task_id=sessionStorage.getItem('current_id');
-	var p_fName=$('#p_fName').val();
-	var p_lName=$('#p_lName').val();
-	var p_ID=$('#p_ID').val();
-	var p_Email=$('#p_Email').val();
-	var p_Phone=$('#p_Phone').val();
-
-
-
-	var p_Filament = $('#p_Filament').val();
-	var p_Instructions=$('#p_Instructions').val();
-	var p_Infill =$('#p_Infill').val();
-
 	var p_Mass=$('#p_Mass').val();	
 	var p_Hours=$('#p_Hours').val();
 	var p_Minutes=$('#p_Minutes').val();
 	var p_ReviewNotes=$('#p_ReviewNotes').val();	
 	var p_Approved=$('#p_Approved').prop('checked');
-
-
-
-
-	
-	console.log('putting');
+	var task_id=sessionStorage.getItem('current_id');
+	var currentLogin=sessionStorage.getItem('current_login');
+	console.log('Posting reivew');
 	$.ajax({
-		url: url+'/api/jobs/'+task_id,
+		url: url+'/api/jobs/logReview/'+task_id,
 		data: JSON.stringify({
-			"p_fName": p_fName,
-			"p_lName": p_lName,
-			"p_ID": p_ID,
-			"p_Email": p_Email,
-			"p_Phone": p_Phone,
-			"p_Filament":p_Filament,
-			"p_Infill":p_Infill,
-			"p_Instructions":p_Instructions,
 			"p_Mass":p_Mass,			
 			"p_Hours":p_Hours,
 			"p_Minutes":p_Minutes,
 			"p_ReviewNotes":p_ReviewNotes,
 			"p_isReviewed":true,
 			'p_isComplete':false,
-			"p_Approved":p_Approved
+			"p_Approved":p_Approved,
+			"p_ReviewLogin":currentLogin
 		}),
 		type:'PUT',
 		contentType:'application/json',
@@ -793,6 +771,7 @@ function postReview(e)
 		}
 	});
 }
+
 
 
 //Will need some additional work
