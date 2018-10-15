@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <Title>Filament Tracking</Title>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src = "js/bootstrap.js"></script>
+  <script src = "main.js"></script>
+  <script>
+    getFilamentRolls();
+    //testPermissions();
+  </script>
+
+  <script>
+    $(document).ready(function(){
+      displayLogin();
+    });
+  </script>
+</head>
+
+<body>
+  <div id='login_display' align="right">
+
+  </div>
+
+
+
+  <div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation"><a href="Filament_Panel.html">Admin Panel</a></li>
+          <li role="presentation" class="active"><a href="Admin_Panel.html">Filament Panel</a></li>
+          <li role="presentation"><a href="StaffLandingPage.html">Staff Panel</a></li>
+          <li role="presentation"><a href="PrintQueue_AwaitingReview.html">New Jobs</a></li>
+          <li role="presentation"><a href="PrintQueue_Ready.html">Paid and Waiting to Print</a></li>
+          <li role="presentation"><a href="PrintQueue_Complete.html">Finished and Waiting for Pickup</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Filament Records</h3>
+    </div>
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Filament Records</h1>
+
+
+        <div>
+          <p><a href="AddFilamentRoll.html">Add New Filament Rolls</a></p>
+        </div>
+
+       
+        <div class="col-sm-12">
+          <p><a class="btn btn-lg btn-success btn-show-all-filament" href="javascript:void(0);" role="button">Display All Filament</a></p>
+        </div>
+
+   
+
+        <div>
+          <label class="control-label" for="f_ID">Search by Filament ID:</label>
+          <div>
+            <input type="number" class="form-control" id="f_ID" placeholder="Enter Filament ID">
+          </div>
+          <div>
+            <p><a class="btn btn-xs btn-primary btn-search-by-ID" href="javascript:void(0);" role="button">Search By ID</a></p>
+          </div>
+        </div>
+        <hr>
+
+        <div>
+          <label for="f_FilamentType">Filter By Work Filament Type:</label>
+          <select id="f_FilamentType">
+            <option value="All" selected>All</option>
+            <option value="ABS">ABS</option>
+            <option value="PLA">PLA</option>
+            <option value="TPU">TPU</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+
+        <div>
+          <label for="f_Empty">Filter by Filament Status:</label>
+          <select id="f_Empty">
+            <option value=true>Empty Rolls Only</option>
+            <option value=false>Active Roll</option>
+            <option value='all' selected>All Statuses</option>
+          </select>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row marketing">
+      <div class="col-lg-12">
+        <h2 class="page-header">Filament Rolls </h2>
+        <div id="rolls"></div>
+      </div>
+    </div>
+
+
+    <footer class="footer">
+      <p>&copy; AD 2018 Strategic Gravity</p>
+    </footer>
+
+  </div> <!-- /container -->
+
+</body>
+</html>

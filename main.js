@@ -9,6 +9,7 @@ $(document).ready(function(){
 	$('#review_print').on('click','.submitButton', postReview);
 	$('#create_login').on('click','.submitButton', addLogin);
 	$('#edit_login').on('click','.submitButton', editLogin);
+	$('#add_roll').on('click','.submitButton', addRoll);
 
 
 	$('#form_log_attempts').on('click', '.submitButton', function(){
@@ -88,6 +89,9 @@ $(document).ready(function(){
 	$('body').on('click','.btn-complete-print',attempt_print);
 	$('body').on('click','.btn-complete-print',completePrint);
 	$('body').on('click','.btn-delete-task',deleteTask);
+	$('body').on('click','.btn-delete-roll',deleteRoll);
+	$('body').on('click','.btn-log-filament',logFilament);
+
 
 	$('body').on('click','.btn-delete-user',deleteUser);
 
@@ -127,6 +131,7 @@ var url='http://johnknowlesportfolio.com:443';
 function getPrints(){
 	//var workRequest=$('#p_WorkRequestType').val();
 	//console.log(workRequest);
+
 	$.get(url+'/api/jobs',function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
@@ -153,6 +158,133 @@ function getPrints(){
 		output+='</ul>';
 		$('#prints').html(output);
 	});
+}
+
+//Filament Section
+function getFilamentRolls(){
+	//var workRequest=$('#p_WorkRequestType').val();
+	//console.log(workRequest);
+
+	$.get(url+'/api/rolls',function(data){
+		let output= '<ul class= "list-group">';
+		$.each(data, function(key,roll){
+			output += '<li class="list-group-item">';
+			output+='DB ID: ' + roll._id + '<br>';
+			output+='Roll Empty: ' + roll.f_isEmpty + '<br>';
+			output+='Filament ID: '+ roll.f_ID + '<br>';
+			output+='Filament Type: ' + roll.f_Type +'<br>';
+			output+='Current Mass of Remaining Filament: ' + roll.f_CurrentMass +'<br>';
+			output+='<a class="btn btn-danger btn-delete-roll" data-task-name="'+roll.f_ID+'" data-task-id="'+roll._id+'">Delete Roll</a>'
+			//output += '<a class="btn btn-success btn-log-filament" data-task-name="'+roll.f_ID+'" data-task-id="'+roll._id+'">Log Filament Usage</a>';
+			output += '<a class="btn btn-success btn-log-filament" data-task-name="'+roll.f_ID+'" data-task-id="'+roll._id+'">Log Filament Usage</a>';
+			output+= '</li>'
+			
+		});
+		output+='</ul>';
+		$('#rolls').html(output);
+	});
+}
+function ViewRoll(){
+	var task_id=sessionStorage.getItem('current_id');
+	var output='';
+	console.log(task_id);
+	$.get(url+'/api/rolls/'+task_id,function(print){
+
+
+		$('#view_roll').html(output);
+	});
+}
+function addRoll()
+{
+
+	console.log('got here');
+
+	var f_ID=$('#f_ID').val();
+	var f_Type=$('#f_Type').val();
+	var f_TotalMass=$('#f_TotalMass').val();
+	var f_EstimatedMass=$('#f_EstimatedMass').val();
+
+	var f_CurrentMass=f_TotalMass-f_EstimatedMass;
+	console.log('got jere');
+
+	console.log('posting');
+	$.ajax({
+		url: url+'/api/rolls',
+		data: JSON.stringify({
+			"f_ID":f_ID,
+			"f_Type": f_Type,
+			"f_TotalMass":f_TotalMass,
+			"f_EstimatedMass":f_EstimatedMass,
+			"f_CurrentMass":f_CurrentMass,
+			"f_isEmpty": false
+		}),
+		type:'POST',
+		contentType:'application/json',
+		success: function(data){
+			window.location.href='Filament_Panel.html';
+		},
+		error:function(xhr ,status, err){
+			console.log(err);
+		}
+	});
+}
+
+
+function ViewPrint(){
+	var task_id=sessionStorage.getItem('current_id');
+	var output='';
+	console.log(task_id);
+	$.get(url+'/api/jobs/'+task_id,function(print){
+		console.log(print);
+		output += 'Patron Name: '+print.p_fName +' '+print.p_lName+ '<br>';
+		output+='Job Type: '+print.p_JobType +'<br>';
+		output+='Pickup Location: ' +print.p_PickUpLocation +'<br>';
+		output+= 'File Name: '+print.p_FileName +'<br>';
+		output+='Date Submitted: ' +dateFromObjectId(print._id)+'<br>';
+		output+='Job Reviewed: ' + print.p_isReviewed+'<br>';
+		output+='Job Approved: ' + print.p_Approved+'<br>';
+		if(print.p_Approved==true)
+		{
+				//Log review
+				output+='<hr>';
+				output+='Print Review: <br>';
+				output+='Reviewed by: ' + print.p_ReviewLogin +'<br>';
+				output+='Review Date: '+print.p_ReviewDate + '<br>';
+				output+='Estimated Time: ' + print.p_Hours +' Hours and ' + print.p_Minutes + ' Minutes <br>';
+				output+='Estimated Mass: ' + print.p_Mass +'<br>';
+				output+='Review Notes: ' + print.p_ReviewNotes +'<br>';
+				output+='<hr>';
+			}
+			else{
+				//log failure
+				output+='<p> ' + p_ReviewNotes +'</p><br>';
+
+			}
+			output+='Job Completed: ' + print.p_isComplete+'<br>';
+			if(print.p_isComplete==true)
+			{
+				//log attempts+completeion time
+				output+='<hr>';
+				output+='Maker who marked Job as Completed: ' +print.p_CompleteLogin +'<br>';
+				output+='Time Marked as Completed: ' +print.p_CompleteDate +'<br>';
+				output+='Total Number of Attempts: '+ print.p_Attempts.length+'<br>';
+				$.each(print.p_Attempts, function(key,attempt){
+					output += "Attempt: " + attempt.p_AttemptNumber +'<br>';
+					output += "Time Started: " +attempt.p_TimeS+'<br>';
+					output +="Time Finished:" +attempt.p_TimeF+'<br>';
+					output +="Mass of Attempt: "+ attempt.p_Mass+'<br>';
+					output += "Attempt Success: " + attempt.p_Status+'<br>';
+					output+='<hr>';
+				});
+				output+='<hr>';
+			}
+			output+='Job Picked Up: ' + print.p_isPickedUp +'<br>';
+			output += `<h4>
+			<a href="`+url +`/uploads/`+print.p_FileName+`" download>download file</a>    
+			</h4>`;
+			
+			$('#view_print').html(output);
+		});
 }
 
 
@@ -256,6 +388,14 @@ function testLogins(e){
 		console.log(job_id);
 		sessionStorage.setItem('current_id',job_id);
 		window.location.href='AttemptPrint.html';
+		return false;
+	}
+	function log_Roll(e){
+		console.log('test');
+		var roll_id=$(this).data('task-id');
+		console.log(roll_id);
+		sessionStorage.setItem('current_id',roll_id);
+		window.location.href='logFilament.html';
 		return false;
 	}
 
@@ -438,9 +578,10 @@ function getCompletePrints(){
 function getReadyPrints(){
 	var workRequest=$('#p_WorkRequestType').val();
 	console.log(workRequest);
-	$.get(url+'/api/jobs/pendingQueue',function(data){
+	$.get(url+'/api/jobs/findByPending/pendingQueue',function(data){
 		let output= '<ul class= "list-group">';
 		$.each(data, function(key,print){
+			console.log(print);
 			if(print.p_JobType==workRequest || workRequest=='All')
 			{
 				output += '<li class="list-group-item">';
@@ -455,6 +596,7 @@ function getReadyPrints(){
 			}
 		});
 		output+='</ul>';
+		console.log(output);
 		$('#prints').html(output);
 	});
 }
@@ -541,7 +683,7 @@ function setTask_view(){
 	var job_id=$(this).data('task-id');
 	console.log(job_id);
 	sessionStorage.setItem('current_id',job_id);
-	window.location.href='viewPrint.html';
+	window.location.href='ViewPrint.html';
 	return false;
 }
 
@@ -746,6 +888,7 @@ function postReview(e)
 	var p_Minutes=$('#p_Minutes').val();
 	var p_ReviewNotes=$('#p_ReviewNotes').val();	
 	var p_Approved=$('#p_Approved').prop('checked');
+	alert(p_Approved);
 	var task_id=sessionStorage.getItem('current_id');
 	var currentLogin=sessionStorage.getItem('current_login');
 	console.log('Posting reivew');
@@ -839,6 +982,23 @@ function deleteTask(){
 		contentType:'application/json',
 		success: function(data){
 			window.location.href='prints.html';
+		},
+		error:function(xhr ,status, err){
+			console.log(err);
+		}
+	});
+
+};
+
+function deleteRoll(){
+	var roll_id=$(this).data('task-id');
+	$.ajax({
+		url: url+'/api/rolls/'+roll_id,
+		type:'DELETE',
+		async: true,
+		contentType:'application/json',
+		success: function(data){
+			window.location.href='Filament_Panel.html';
 		},
 		error:function(xhr ,status, err){
 			console.log(err);
